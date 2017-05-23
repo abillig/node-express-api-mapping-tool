@@ -1,0 +1,61 @@
+link(rel='stylesheet', href='/stylesheets/style.css')
+
+body(style="margin: 0")
+
+  div(id="header")
+    div(id="images")
+      img(src="http://45.55.226.50/mapping-tool/images/nygreen.png")
+      img(src="http://45.55.226.50/mapping-tool/images/nyblue.png")
+      img(src="http://45.55.226.50/mapping-tool/images/nypurple.png")
+      img(src="http://45.55.226.50/mapping-tool/images/nyred.png")
+      img(src="http://45.55.226.50/mapping-tool/images/nyorange.png")
+
+    div(id="introText")
+      div(id="titleText") New York County Mapper
+      div(id="explainer")
+        p Create a dynamic, zoomable D3 gradient map of county-level data. <br>Enter the data points in the county slots below and hit 'Make My Map.' You'll be redirected to a page with a brand new map.
+
+    a(href="#dataForm")
+      button(class="button blue") BEGIN
+
+  form(id="dataForm" method='POST' action='')
+    div.form-group
+      div(id="formQuestions")
+        div
+          label(for='title' style="font-size: 4.0vh") What are you measuring?
+          input#name.form-control(type='text', placeholder='e.g. property crimes, frogs, eggs, mastodons' name='title' value=(undefined===maptest ? '' : maptest.title))
+          br
+        div
+          label(for='title', style="font-size: 4.0vh") Select a color for the gradient
+          select#name.form-control(name='color' value=(undefined===maptest ? '' : maptest.color))
+            option(value='blue') Blue
+            option(value='red') Red
+            option(value='green') Green
+            option(value='orange') Orange
+            option(value='black_and_white') Black and White
+            option(value='purple') Purple
+        div
+          label(for='title', style="font-size: 4.0vh") Enter the data for each county below. Only use integers and don't use punctuation... No commas, no percentage symbols. Make sure to enter a value for each county.
+    br
+
+    div(id="counties", style='margin-left: 10%; ')
+      each county in counties
+        div(id='county_entry')
+          div(style='text-align: center')
+            p(style='display:inline-block; font-size: 3.0vh;')= county + ':'
+            input#userInputFile(type='text', name='counties[#{county}]', style='border-radius: 5px; height: 4%; margin-left: 2%; ')
+
+
+
+
+
+
+
+
+
+    button(class="button blue center", type='submit') Map It!
+
+  if errors
+    ul
+      for error in errors
+        li!= error.msg
